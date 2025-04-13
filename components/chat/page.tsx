@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChatInterface } from "@/components/chat-interface"
+import { ChatInterface } from "@/components/chat/chat-interface"
 
 interface Message {
   id: string
@@ -26,20 +26,16 @@ export default function ChatWrapper() {
     setIsLoading(true)
 
     try {
-        const response = await fetch("http://localhost:5000/chat", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ message }),
-          });
+      const response = await fetch("http://127.0.0.1:5000/process_query", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: content }),
+      })
 
-        if (!response.ok) {
-            const errText = await response.text();
-            console.error("Backend Error:", errText);
-            throw new Error("Failed to get response");
-          }
-          
+      if (!response.ok) throw new Error("LLM fetch failed")
+
       const data = await response.json()
 
       const assistantMessage: Message = {
