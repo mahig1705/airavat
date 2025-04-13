@@ -18,7 +18,7 @@ API_KEY = "d1af7f37-93ff-425d-b21b-12721b16b036"
 er = EventRegistry(apiKey=API_KEY)
 
 # OpenAI API Key
-openai.api_key = "api_key"
+openai.api_key = ""
 
 @app.route('/process_query', methods=['POST'])
 def process_query():
